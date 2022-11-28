@@ -1,0 +1,80 @@
+package com.wmart.operation;
+import java.util.Scanner;
+import com.wmart.login.Admin;
+import com.wmart.login.User;
+import com.wmart.product.Product;
+
+public class Operations {
+	
+
+	public void logins() throws Exception
+	{
+		Admin ad = new Admin();
+		User user = new User();
+		Product pro = new Product();
+		Operations op = new Operations();	
+		Scanner scan = new Scanner(System.in);	
+		System.out.println("Welcome To WMart: ");	
+		System.out.println("Press 1 for new Register == Press 2 for User login == Press 3 for Admin login: ");
+		int i = scan.nextInt();
+				
+		if(i==1)
+		{
+			System.out.println("Please Register Here: "+i);
+			user.Register();
+			user.Login();
+		}
+		else if(i==2) 
+		{			
+			System.out.println("Please login here: "+i);
+			user.Login();
+			pro.AddCart();
+		}
+		else if(i==3)
+		{
+			System.out.println("Admin Log-in: "+i);
+			ad.Login();
+			System.out.println("Press 1 for Add Admin == Press 2 for user Details == Press 3 for Product Details: ");
+			int j = scan.nextInt();
+			if(j==1) 
+			{
+				ad.Register();
+			}
+			else if(j==2) {
+				op.Details();			
+			}
+			else if(i==3)
+			{
+				pro.ProductDetails();
+			}
+		}
+	}
+	
+	
+	
+   public void Details() throws Exception
+   {
+	   Product pro = new Product();
+	   User us = new User();
+	   Scanner scan = new Scanner(System.in);
+	   System.out.println("Press 1 for UserDetail == Press 2 for ProductDetails");
+	   int i = scan.nextInt();
+	  if(i==1)
+	   {
+		   System.out.println("User Details");
+		   us.UserDetails();
+	   }
+	   
+   }
+	
+	
+	public static void main(String[] args) throws Exception {
+		
+		Operations op = new Operations();
+		op.logins();
+		
+		
+
+	}
+
+}

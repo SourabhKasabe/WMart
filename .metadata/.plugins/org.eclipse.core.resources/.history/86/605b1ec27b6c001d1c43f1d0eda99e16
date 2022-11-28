@@ -1,0 +1,18 @@
+package com.wmart.login;
+import java.sql.*;
+import java.util.Scanner;
+
+public class Login {
+
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Welcome to WMart: ");
+		
+		System.out.println("New register please click here: ");
+	    scan.getClass();
+		
+		
+
+	}
+
+}

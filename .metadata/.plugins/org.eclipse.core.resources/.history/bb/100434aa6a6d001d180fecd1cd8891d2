@@ -1,0 +1,182 @@
+package com.wmart.product;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Vector;
+
+import com.wmart.login.Admin;
+
+public class Product {
+	Scanner scan = new Scanner(System.in);
+	
+	
+	public void ProductDetails() throws Exception
+	{
+		Product pro = new Product();
+		Admin ad = new Admin();
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/wmart", "root", "root");
+		Statement st = conn.createStatement();
+		
+		ResultSet rs=st.executeQuery("Select * from Product");
+		System.out.println("Here is Product : "+rs);
+		while(rs.next())
+		{
+			System.out.println(rs.getString("Product_id")+"  : "+rs.getString("name")+" : "+rs.getString("price")+" : "+rs.getString("description")+" : "+rs.getString("Quantity")) ;
+			
+		}		
+		rs.close();
+		conn.close();
+		st.close();
+	}
+	
+	
+	public void AddCart() throws Exception
+	{		
+		Product pro = new Product();
+		Admin ad = new Admin();
+		pro.ProductDetails();
+		System.out.println("Press 1 for add == Press 2 for remove == show cart for 3");
+		int i = scan.nextInt();
+		
+		if(i==1)
+		{
+			pro.add();
+		}
+		else if(i==2)
+		{
+			pro.Remove();
+		}
+		else if(i==3)
+		{
+			pro.showcart();
+		}
+		
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void add() throws Exception
+	{
+		Product pr=new Product();
+		Vector vec = new Vector();
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/wmart", "root", "root");
+		Statement st = conn.createStatement();
+		ResultSet rs=st.executeQuery("Select * from Product");
+		while(rs.next())
+		{
+			System.out.println(rs.getString("Product_id")+" : "+ rs.getString("Name")) ;
+			
+		}		
+		rs.close();
+		conn.close();
+		st.close();
+		
+		Scanner Scan = new Scanner(System.in);
+		//System.out.println("Select Elements 1,2,3,4,5,6,7,8,9,10");
+		int i= scan.nextInt();
+		if(i==1)
+		{
+			vec.addElement(rs);
+			System.out.println("Laptop is add");
+			pr.AddCart();
+		}
+		if(i==2)
+		{
+			vec.addElement(rs);
+			System.out.println("Mobile is add");
+			pr.AddCart();
+		}
+		if(i==3)
+		{
+			vec.addElement(rs);
+			System.out.println("Earphones is add");
+			pr.AddCart();
+		}
+		if(i==4)
+		{
+			vec.addElement(rs);
+			System.out.println("Speaker is add");
+			pr.AddCart();
+		}	
+		if(i==5)
+		{
+			vec.addElement(rs);
+			System.out.println("Washing-Machin is add");
+			pr.AddCart();
+		}	
+		if(i==6)
+		{
+			vec.addElement(rs);
+			System.out.println("Refrigerators is add");
+			pr.AddCart();
+		}
+		if(i==7)
+		{
+			vec.addElement(rs);
+			System.out.println("Microwave is add");
+			pr.AddCart();
+		}
+		if(i==8)
+		{
+			vec.addElement(rs);
+			System.out.println("Air Condition is add");
+			pr.AddCart();
+		}
+		if(i==9)
+		{
+			vec.addElement(rs);
+			System.out.println("Television is add");
+			pr.AddCart();
+		}
+		if(i==10)
+		{
+			vec.addElement(rs);
+			System.out.println("Smart Watch is add");
+			pr.AddCart();
+		}
+		
+	}
+	public void Remove() throws Exception
+	{
+		ArrayList al = new ArrayList();
+	    al.remove(al);
+	    System.out.println("Remove Element sucessfully");
+		
+	}
+	
+	public void showcart()
+	{
+		Vector vec = new Vector();
+		
+		System.out.println("There are : "+ vec.get(1)+": Elements in you cart");
+		
+		
+	}
+	
+	
+	
+	
+	
+	public static void main(String[] args) throws Exception{
+		
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/wmart", "root", "root");
+		PreparedStatement ps = conn.prepareStatement("insert into product(Name,Price,Descprition,Quantity) value(?,?,?,?)");
+		
+			ps.setString(1, "Mobile");
+			ps.setString(2, "20000");
+			ps.setString(3, "Ram-8Gb,Rom-128Gb,FrontCamera-12mp,RareCamera-64mp,Battery-5000mpa");
+			ps.setString(4, "10");			
+			
+		int no = ps.executeUpdate();
+		System.out.println("Inserting value: "+no);		
+		
+		conn.close();
+		ps.close();
+	}
+
+	
+
+}

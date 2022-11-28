@@ -1,0 +1,39 @@
+package com.wmart.login;
+import java.sql.*;
+import java.util.Scanner;
+
+public class Login {
+
+	public static void main(String[] args) throws Exception {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Welcome to WMart: ");
+		User user = new User();
+		String y="Yes",n="No";
+		
+		if(y=="") 
+		{
+			System.out.println("New register please click here: "+y);
+			user.Register();
+		} 
+		else if(n=="")
+		{
+			System.out.println("Please login here: "+n);
+			user.Login();
+		}
+		else {
+			System.out.println("User Not found");
+		}
+		
+		
+	     //System.out.println("New register please click here: ");
+		//user.Register();
+		
+
+		
+	    
+		
+		
+
+	}
+
+}

@@ -1,0 +1,99 @@
+package com.wmart.product;
+import java.sql.*;
+import java.util.Scanner;
+import java.util.Vector;
+
+import com.wmart.login.Admin;
+
+public class Product {
+	Scanner scan = new Scanner(System.in);
+	
+	
+	public void ProductDetails() throws Exception
+	{
+		Product pro = new Product();
+		Admin ad = new Admin();
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/wmart", "root", "root");
+		Statement st = conn.createStatement();
+		
+		ResultSet rs=st.executeQuery("Select * from Product");
+		System.out.println("Here is user Details: "+rs);
+		while(rs.next())
+		{
+			System.out.println(rs.getString("Product_id")+"  : "+rs.getString("name")+" : "+rs.getString("price")+" : "+rs.getString("description")+" : "+rs.getString("Quantity")) ;
+			
+		}		
+		rs.close();
+		conn.close();
+		st.close();
+	}
+	
+	
+	public void AddCart()
+	{		
+		Product pro = new Product();
+		Admin ad = new Admin();
+		System.out.println("Press 1 for add == Press 2 for remove == show cart 3");
+		int i = scan.nextInt();
+		
+		if(i==1)
+		{
+			pro.add();
+		}
+		else if(i==2)
+		{
+			pro.Remove();
+		}
+		else if(i==3)
+		{
+			pro.showcart();
+		}
+		
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void add()
+	{
+		Vector vec = new Vector();
+		vec.addElement(null);
+		System.out.println("Successfully add object");
+		
+	}
+	public void Remove()
+	{
+		Vector vec = new Vector();
+		vec.remove(0);
+	}
+	
+	public void showcart()
+	{
+		
+	}
+	
+	
+	
+	
+	
+	public static void main(String[] args) throws Exception{
+		
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/wmart", "root", "root");
+		PreparedStatement ps = conn.prepareStatement("insert into product(name,price,descprition,quantity) value(?,?,?,?)");
+		
+			ps.setString(1, "Mobile");
+			ps.setString(2, "20000");
+			ps.setString(3, "Ram-8Gb,Rom-128Gb,FrontCamera-12mp,RareCamera-64mp,Battery-5000mpa");
+			ps.setString(4, "10");			
+			
+		int no = ps.executeUpdate();
+		System.out.println("Inserting value: "+no);		
+		
+		conn.close();
+		ps.close();
+	}
+
+	
+
+}

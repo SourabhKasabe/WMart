@@ -1,0 +1,28 @@
+package com.wmart.login;
+
+import java.sql.*;
+
+public class Admin {
+
+	public static void main(String[] args) throws Exception{
+        Class.forName("com.mysql.jdbc.Driver");
+		
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/wmart", "root", "root");
+		
+		PreparedStatement ps = conn.prepareStatement("insert into admin_log value(?,?,?,?,?)");
+		ps.setInt(1, 1);
+		ps.setString(2, "SourabhKasabe");
+		ps.setString(3, "sorabh26@");
+		ps.setString(4, "Sourabhksd@gmail.com");
+		ps.setString(5, "9145102428");
+		
+		int no = ps.executeUpdate();
+		System.out.println("record is inserted : "+no);
+		
+		conn.close();
+		ps.close();
+
+
+	}
+
+}

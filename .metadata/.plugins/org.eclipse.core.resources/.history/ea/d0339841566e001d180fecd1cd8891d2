@@ -1,0 +1,199 @@
+package com.wmart.product;
+import java.sql.*;
+import java.util.Collection.*;
+import java.util.HashMap;
+import java.util.Scanner;
+import java.util.Vector;
+
+import com.wmart.login.Admin;
+import com.wmart.login.User;
+
+public class Product {
+	Scanner scan = new Scanner(System.in);
+	
+	public void ProductDetails() throws Exception
+	{
+		Product pro = new Product();
+		Admin ad = new Admin();
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/wmart", "root", "root");
+		Statement st = conn.createStatement();
+		
+		ResultSet rs=st.executeQuery("Select * from Product");
+		System.out.println("Here is Product : Product Id , Price, Discription ");
+		while(rs.next())
+		{
+			System.out.println(rs.getString("Product_id")+"  : "+rs.getString("name")+" : "+rs.getString("price")+" : "+rs.getString("description")+" : "+rs.getString("Qauntity")) ;
+			
+		}		
+		rs.close();
+		conn.close();
+		st.close();
+	}
+	
+	
+	public void AddCart() throws Exception
+	{		
+		Product pro = new Product();
+		Admin ad = new Admin();
+		pro.ProductDetails();
+		System.out.println("=========================================================");
+		System.out.println("Press 1 for add == Press 2 for remove == show cart for 3");
+		int i = scan.nextInt();
+		
+		if(i==1)
+		{
+			pro.add();
+		}
+		else if(i==2)
+		{
+			pro.Remove();
+		}
+		else if(i==3)
+		{
+			pro.showcart();
+		}
+	}
+	
+	
+	
+	public void add() throws Exception
+	{   User us =new User();
+		Product pr=new Product();
+		HashMap hm = new HashMap();
+		
+		System.out.println("Enter your ProductId");
+		String productId= scan.next();	
+		
+		
+		
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/wmart", "root", "root");
+		Statement st = conn.createStatement();
+		ResultSet rs;
+		PreparedStatement ps ;
+	
+		
+		
+		ps=conn.prepareStatement("Insert into cart(Name,Price,Qauntity,TotalPrice)value(?,?,?,?)");	
+		//ps=conn.prepareStatement("select Name,Qauntity from cart group by Qauntity");
+		rs=st.executeQuery("select * from product where Product_Id='"+productId+"'");
+		
+		String userdata="";
+		
+		String rate=rs.getString(3);
+		int amount = Integer.parseInt(rate);
+		
+		System.out.println("Enter quantity :");
+		String pquant=rs.getNString(4);
+		int quant=Integer.parseInt(pquant);
+		
+		String total = rs.getString(6);
+		int totalAmount = Integer.parseInt(total);
+		totalAmount+=amount*quant;
+	
+	    String name=" ";
+		while(rs.next())
+		{		
+			
+			userdata=rs.getString(2);
+			ps.setString(1, rate);
+			System.out.println(rate);
+			 
+			userdata=rs.getString(3);
+			ps.setString(2, userdata);
+		    System.out.println(userdata);
+		    
+		    userdata = rs.getString(5);
+		    ps.setString(3, pquant);
+		    System.out.println(pquant);
+		    
+		    userdata=rs.getString(6);
+		    ps.setLong(4, totalAmount);
+		    System.out.println(totalAmount); 
+		  
+			ps.executeUpdate();
+		    pr.AddCart();
+		}
+		
+		rs.close();
+		conn.close();
+		st.close();
+		ps.close();
+		
+	}
+	
+			
+		
+	public void Remove() throws Exception
+	{
+		Product pro = new Product();
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/wmart", "root", "root");
+		ResultSet rs ;
+		Statement st = conn.createStatement();
+		PreparedStatement ps;		
+		rs=st.executeQuery("select * from cart");
+		while(rs.next())
+		{
+			System.out.println(rs.getString("id")+"  : "+rs.getString("Name")+" : "+rs.getString("Price")+" : "+rs.getString("Qauntity")+" : "+rs.getString("TotalPrice"));
+		}
+		System.out.println("Enter your Remove Product id");
+		String id= scan.next();
+		ps=conn.prepareStatement("delete from cart where id='"+id+"'");
+		int i =ps.executeUpdate();
+		System.out.println("Element Is Removed"+i);
+		
+		pro.AddCart();
+		
+		rs.close();
+		conn.close();
+		st.close();
+		ps.close();
+		
+	}
+	
+	public void showcart() throws Exception
+	{
+		Product pro = new Product();
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/wmart", "root", "root");	
+		ResultSet rs ;
+		Statement st = conn.createStatement();
+		//PreparedStatement ps;
+		rs=st.executeQuery("select * from cart") ;
+		while(rs.next())
+		{
+			System.out.println(rs.getString("id")+" : "+rs.getString("Name")+" : "+rs.getString("Price")+" : "+rs.getString("Qauntity")+" : "+rs.getString("TotalPrice"));
+		}
+	
+	    rs.close();
+		conn.close();
+		st.close();
+		
+	
+	}	
+	
+	
+	public static void main(String[] args) throws Exception
+	{
+		
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/wmart", "root", "root");
+		PreparedStatement ps = conn.prepareStatement("insert into product(Name,Price,Description,Qauntity) value(?,?,?,?)");
+		
+			ps.setString(1, "Mobile");
+			ps.setString(2, "20000");
+			ps.setString(3, "Ram-8Gb,Rom-128Gb,FrontCamera-12mp,RareCamera-64mp,Battery-5000mpa");
+			ps.setString(4, "10");			
+			
+		int no = ps.executeUpdate();
+		System.out.println("Inserting value: "+no);		
+		
+		conn.close();
+		ps.close();
+	}
+	
+
+}
+

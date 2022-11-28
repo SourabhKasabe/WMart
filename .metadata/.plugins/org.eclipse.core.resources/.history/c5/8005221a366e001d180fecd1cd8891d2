@@ -1,0 +1,55 @@
+package com.wmart.java.pricecalculation;
+
+public class ShoppingCartTest {
+	public static void main(String[] args)
+	  {
+	    // creates new items with product name, quantity and unit price
+	    Item i1 = new Item("Samsung mobile", 1, 10000.0);
+	    Item i2 = new Item("Dell Laptop", 1, 33000.0);
+	    Item i3 = new Item("Oneplus Bluetooth headset", 1, 1500.0);
+	    Item i4 = new Item("Realme Mobile", 1, 10000.0);
+	    Item i5 = new Item("Hp Laptop", 1, 45000.0);
+	    
+	    ShoppingCart cart = new ShoppingCart();
+	    
+	    /* add the item to the cart */
+	    cart.addToCart(i1);
+	    cart.addToCart(i2);
+	    cart.addToCart(i3);
+	    cart.addToCart(i4);
+	    cart.addToCart(i5);
+	    
+	    
+	    cart.showCart();
+	    
+	    /* remove the item sent as argument from the cart */
+	    cart.removeFromCart(i3);    
+	    
+	  
+	    cart.showCart();
+
+	   
+	    double totalAmount = cart.getTotalAmount();
+	    System.out.println(totalAmount);
+
+	   
+	    double payableAmount = cart.getPayableAmount();
+	    System.out.println(payableAmount);    
+
+	 
+	    cart.applyCoupon("IND50");
+	    
+	   
+	   cart.printInvoice();
+
+	    cart.applyCoupon("IND10");
+
+	   
+	    cart.printInvoice();
+
+	    cart.addToCart(new Item("Realme Charger", 1, 1200.00));
+	    
+	    cart.printInvoice();
+	  }
+	}
+

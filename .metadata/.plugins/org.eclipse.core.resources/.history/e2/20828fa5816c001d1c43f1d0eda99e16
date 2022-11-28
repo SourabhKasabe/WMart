@@ -1,0 +1,74 @@
+package com.wmart.login;
+
+import java.sql.*;
+import java.util.Scanner;
+
+import com.mysql.cj.Query;
+
+public class User {
+	
+	public void Login() throws Exception
+	{
+		Scanner scanner = new Scanner(System.in); 
+		System.out.println("Enter your login Id");
+		int id = scanner.nextInt();
+		System.out.println("Enter your Password");
+		String pass = scanner.next();
+		
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/wmart", "root", "root");
+		Statement st ;
+		st= conn.createStatement();
+		String query = "Select * From user_log";
+		ResultSet rs ;
+		rs= st.executeQuery(query); 
+		if(rs.next())
+		{
+			System.out.println("Your Login is succesfull"+rs);
+			String query1 ="select user_log where id=? ";
+			st.executeQuery(query1);
+		}
+		else {
+			System.out.println("Your Login is Fail");
+		}
+		
+	}
+	
+	public void Register() throws Exception{
+		 Scanner scan = new Scanner(System.in);
+	        System.out.println("New Register here:");
+			System.out.println("Enter your UserName");
+			String UserName=scan.next();
+			System.out.println("Enter your Password");
+			String Password=scan.next();
+			System.out.println("Enter Your Email");
+			String email=scan.next();
+			System.out.println("Enter your MobileNo");
+			String MobileNo=scan.next();
+			
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/wmart", "root", "root");
+			
+			PreparedStatement ps = conn.prepareStatement("insert into user_log(UserName,Password,email,MobileNo) value(?,?,?,?)");
+		
+			ps.setString(1, UserName);
+			ps.setString(2, Password);
+			ps.setString(3, email);
+			ps.setString(4, MobileNo);
+						
+			
+			int no = ps.executeUpdate();
+			System.out.println("record is inserted : "+no);
+			
+			conn.close();
+			ps.close();
+
+	}
+	
+       
+		
+
+	
+
+}

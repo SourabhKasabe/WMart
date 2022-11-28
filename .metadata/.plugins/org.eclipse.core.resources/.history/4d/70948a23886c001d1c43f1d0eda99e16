@@ -1,0 +1,29 @@
+package com.wmart.product;
+import java.sql.*;
+import java.util.HashSet;
+
+public class Product {
+	
+	
+	public void PoductList() throws Exception
+	{
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/wmart", "root", "root");
+		PreparedStatement ps = conn.prepareStatement("insert into product(name,price,descprition,quantity) value(?,?,?,?)");
+		PreparedStatement hs = (PreparedStatement) new HashSet();
+		hs=ps;
+		ps.setString(1, "Mobile"+"10000"+"8gb Ram, 128gb Rom, 16mp Front camera, 64mp Rare camera"+"10");
+		
+		int no = ps.executeUpdate();
+		System.out.println("Inserting value"+no);
+		
+		conn.close();
+		hs.close();
+	}
+
+	public static void main(String[] args) {
+		
+
+	}
+
+}

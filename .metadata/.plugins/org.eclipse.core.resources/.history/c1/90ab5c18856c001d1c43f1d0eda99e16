@@ -1,0 +1,10 @@
+package com.wmart.product;
+
+public class Product {
+
+	public static void main(String[] args) {
+		
+
+	}
+
+}

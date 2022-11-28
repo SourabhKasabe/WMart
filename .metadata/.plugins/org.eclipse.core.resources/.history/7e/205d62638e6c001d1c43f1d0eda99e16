@@ -1,0 +1,33 @@
+package com.wmart.operation;
+
+import java.util.Scanner;
+
+import com.wmart.login.User;
+
+public class Operations {
+
+	public static void main(String[] args) throws Exception {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Welcome to WMart: ");
+		User user = new User();
+		String y=" ";
+		int i = 0;
+		
+		System.out.println("are you new register"+i);
+		if(y=="Yes")
+		{
+			System.out.println("new Register"+i);
+			user.Register();
+		
+		}
+		else if(y=="No")
+		{
+			System.out.println("Please login here"+i);
+			user.Login();
+		}
+		
+	
+
+	}
+
+}
